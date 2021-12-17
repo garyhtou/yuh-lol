@@ -14,67 +14,40 @@
 
 		<meta name="twitter:card" content="summary_large_image" />
 
-		<!-- Fonts -->
+		<!-- Styles and Fonts -->
+		<link rel="stylesheet" href="/styles.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Corinthia:wght@700&display=swap"
 			rel="stylesheet"
 		/>
-
-		<!-- Styles -->
-		<style>
-			html,
-			body {
-				margin: 0;
-				padding: 0;
-				background: black;
-				color: white;
-				overflow: hidden;
-			}
-			.container {
-				width: 100vw;
-				height: 100vh;
-				max-width: 100vw;
-				max-height: 100vh;
-
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: stretch;
-
-				overflow: hidden;
-			}
-			.title {
-				font-size: 4rem;
-				font-weight: bold;
-				text-align: center;
-				margin-top: 0;
-				margin-bottom: 0.5rem;
-
-				font-family: 'Corinthia', cursive;
-				color: palevioletred;
-			}
-			.img-wrapper {
-				padding: 5vw;
-				min-width: 0;
-				max-height: 70vh;
-			}
-			img {
-				width: 100%;
-				height: auto;
-				max-width: 100%;
-				max-height: 100%;
-				object-fit: contain;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h1 class="title">yuhhh</h1>
 			<div class="img-wrapper">
-				<img src="<%= url %>" alt="<%= gif.title %>" />
+				<img src="<%- url %>" alt="<%= gif.title %>" />
 			</div>
 		</div>
+		<script nonce="<%= nonce %>">
+			(() => {
+				const audio = new Audio('<%- music %>');
+				audio.loop = true;
+				audio.volume = 0.5;
+				audio.play();
+
+				document.body.addEventListener('click', function () {
+					if (audio.paused) {
+						audio.play();
+					}
+				});
+
+				// Reload window after 59 minutes to refresh audio link
+				setTimeout(() => {
+					location.reload();
+				}, 1000 * 60 * 59);
+			})();
+		</script>
 	</body>
 </html>
