@@ -3,6 +3,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY ./package.json ./yarn.lock /usr/src/app/
 RUN yarn install && yarn cache clean
+RUN npm run build
 COPY ./ /usr/src/app
 ENV NODE_ENV production
 ENV PORT 80
