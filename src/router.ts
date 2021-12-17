@@ -1,4 +1,6 @@
 import express, { Router, Request, Response } from 'express';
+import axios from 'axios';
+import getRandomGif from './helpers/getRandomGif';
 
 const router: Router = express.Router();
 
@@ -11,20 +13,25 @@ router.get('/ping', (req: Request, res: Response) => {
 	res.send('pong! 🏓');
 });
 
-router.get('/', (req: Request, res: Response) => {
-	const response = {
-		message:
-			'Hello World! Welcome to the Express Typescript Simple Boilerplate.',
-		boilerplate: {
-			repository:
-				'https://github.com/garyhtou/express-typescript-simple-boilerplate',
-			author: {
-				name: 'Gary Tou',
-				website: 'https://garytou.com',
-			},
-		},
-	};
-	res.json(response);
+router.get('/', async (req: Request, res: Response) => {
+	// Choose a random gif
+	const gif = await getRandomGif();
+	console.log(gif.id);
+
+	// Proxy gif from Giphy to response
+	const stream = await axios.get(gif.images.original.url, {
+		responseType: 'stream',
+	});
+
+	// Set same content-type
+	res.set('Content-Type', stream.headers['content-type']);
+	res.set(
+		'Content-Disposition',
+		`inline; filename="${encodeURIComponent(gif.title)}.gif"`
+	);
+
+	// Pipe gif stream
+	stream.data.pipe(res);
 });
 
 export default router;

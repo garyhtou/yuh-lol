@@ -4,6 +4,7 @@ dotenv.config(); // Load envrionment variables from .env file
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import nocache from 'nocache';
 
 import router from './router';
 import errorHandlers from './helpers/errorHandlers';
@@ -16,6 +17,9 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 // Allow CORS
 app.use(cors());
+
+// Don't cache responses
+app.use(nocache());
 
 // Add paths (router)
 app.use(router);
