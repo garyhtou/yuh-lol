@@ -7,7 +7,8 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"start": "ts-node .",
-		"build": "rimraf ./dist && tsc -p .",
+		"build": "rimraf ./dist && tsc -p . && npm run copyAssets",
+		"copyAssets": "mkdir -p ./dist/src/views && cp -ri ./src/views ./dist/views",
 		"dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
 		"lint": "tslint -c tslint.json -p tsconfig.json --fix",
 		"test": "echo \"Error: no test specified\" && exit 1"
