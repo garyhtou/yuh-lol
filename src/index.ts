@@ -21,6 +21,10 @@ app.use(cors());
 // Don't cache responses
 app.use(nocache());
 
+// Set EJS templating engine
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 // Add paths (router)
 app.use(router);
 
