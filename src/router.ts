@@ -5,6 +5,8 @@ import getGifById from './helpers/getGifById';
 import moment from 'moment';
 import streamGiphy from './helpers/streamGiphy';
 
+const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+
 const router: Router = express.Router();
 
 // Express body-parser
@@ -20,7 +22,8 @@ router.get('/', async (req: Request, res: Response) => {
 	// Choose a random gif
 	const gif = await getRandomGif();
 	console.log('HOME', gif.id);
-	const domain = req.protocol + '://' + req.get('host');
+	const domain = PROTOCOL + '://' + req.get('host');
+	console.log(domain);
 
 	res.render('pages/index', {
 		title: 'yuhhh!',
