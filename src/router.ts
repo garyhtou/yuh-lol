@@ -23,7 +23,6 @@ router.get('/', async (req: Request, res: Response) => {
 	const gif = await getRandomGif();
 	console.log('HOME', gif.id);
 	const domain = PROTOCOL + '://' + req.get('host');
-	console.log(domain);
 
 	res.render('pages/index', {
 		title: 'yuhhh!',
@@ -37,7 +36,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get(
 	'/gif',
-	validateRequest(1000 * 60), // 1 minute
+	validateRequest(1000 * 60 * 60), // 1 hour
 	async (req: Request, res: Response) => {
 		const id = req.query.d as string;
 
@@ -59,6 +58,8 @@ router.get(
 	'/music.mp3',
 	validateRequest(1000 * 60 * 60), // 1 hour
 	async (req: Request, res: Response) => {
+		console.log('MUSIC');
+
 		// Stream it
 		await streamUrl(
 			req,
