@@ -27,6 +27,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 			useDefaults: true,
 			directives: {
 				scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
+				mediaSrc: ["'self'", 'https://assets.garytou.com'],
 			},
 		},
 	})(req, res, next);

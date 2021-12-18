@@ -3,7 +3,7 @@ import getRandomGif from './helpers/getRandomGif';
 import { generateUrl, validateSignature } from './helpers/protectUrl';
 import getGifById from './helpers/getGifById';
 import moment from 'moment';
-import streamGiphy from './helpers/streamGiphy';
+import streamUrl from './helpers/streamUrl';
 
 const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 
@@ -46,7 +46,12 @@ router.get(
 		console.log('GIF', gif.id);
 
 		// Stream it
-		await streamGiphy(req, res, gif);
+		await streamUrl(
+			req,
+			res,
+			gif.images.original.url,
+			`${encodeURIComponent(gif.title)}.gif`
+		);
 	}
 );
 
@@ -54,7 +59,13 @@ router.get(
 	'/music.mp3',
 	validateRequest(1000 * 60 * 60), // 1 hour
 	async (req: Request, res: Response) => {
-		res.sendFile(__dirname + '/assets/get_into_it_by_doja_cat.mp3');
+		// Stream it
+		await streamUrl(
+			req,
+			res,
+			process.env.MUSIC_URL,
+			`${encodeURIComponent('Doja Cat - Get Into It (Yuh) (Visualizer)')}.mp3`
+		);
 	}
 );
 
