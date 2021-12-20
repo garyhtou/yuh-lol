@@ -36,7 +36,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 router.get(
 	'/gif',
-	validateRequest(1000 * 60 * 60), // 1 hour
+	validateRequest(1000 * 60 * 60 * 24 * 14), // 2 weeks
 	async (req: Request, res: Response) => {
 		const id = req.query.d as string;
 
@@ -56,7 +56,7 @@ router.get(
 
 router.get(
 	'/music.mp3',
-	validateRequest(1000 * 60 * 60), // 1 hour
+	validateRequest(1000 * 60 * 60 * 24 * 14), // 2 weeks
 	async (req: Request, res: Response) => {
 		console.log('MUSIC');
 
